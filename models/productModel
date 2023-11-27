@@ -1,0 +1,47 @@
+const mongoose = require('mongoose')
+const { Schema } = mongoose
+
+const Products = new Schema({
+
+    product_name: {
+        type: String,
+    },
+
+    product_brand: {
+        type: String,
+    },
+
+    variants: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Variants'
+        }
+    ]
+
+})
+
+const Variants = new Schema({
+
+    variant_size: {
+        type: String
+    },
+
+    variant_price: {
+        type: Number
+    },
+
+    products: {
+        type: Schema.Types.ObjectId,
+        ref: 'Products'
+    }
+
+})
+
+// products.post('findOneAndDelete', async ( Products ) => {
+
+// })
+
+const products_data = mongoose.model('Products', Products)
+const products_variant = mongoose.model('Variants', Variants)
+
+module.exports = { products_data, products_variant }
